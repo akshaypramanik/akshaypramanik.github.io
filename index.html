@@ -322,6 +322,172 @@
   }
   .form-submit:hover { background: var(--gold); color: var(--bg); }
 
+  /* ── FUN TOOLS ─────────────────────────────────── */
+  #tools { background: var(--bg3); }
+  .tools-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
+
+  /* shared tool card */
+  .tool-card {
+    border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; transition: border-color 0.3s;
+  }
+  .tool-card:hover { border-color: var(--gold-line); }
+
+  .tool-topbar {
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 0.55rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .tool-dots { display: flex; gap: 5px; }
+  .tool-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .tool-dot.r { background: #ff5f56; } .tool-dot.y { background: #ffbd2e; } .tool-dot.g { background: #27c93f; }
+  .tool-filename { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+
+  .tool-body { padding: 1.8rem; background: var(--bg); }
+
+  .tool-label {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem;
+  }
+
+  /* ── DICE ────── */
+  .dice-display {
+    display: flex; justify-content: center; align-items: center;
+    margin: 1.2rem 0;
+  }
+  .die {
+    width: 90px; height: 90px;
+    border: 2px solid var(--gold-line); border-radius: 14px;
+    background: var(--bg2);
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    padding: 10px; gap: 6px;
+    transition: transform 0.1s;
+    position: relative;
+  }
+  .die.rolling { animation: rollDie 0.5s ease; }
+  @keyframes rollDie {
+    0%   { transform: rotate(0deg) scale(1); }
+    20%  { transform: rotate(-15deg) scale(0.9); }
+    50%  { transform: rotate(20deg) scale(1.1); }
+    80%  { transform: rotate(-8deg) scale(0.95); }
+    100% { transform: rotate(0deg) scale(1); }
+  }
+  .dot {
+    width: 100%; aspect-ratio: 1;
+    background: var(--gold); border-radius: 50%;
+    opacity: 0; transition: opacity 0.15s;
+  }
+  .dot.show { opacity: 1; }
+
+  /* dot layout by face value using grid positions */
+  /* positions: 1=tl,2=tm,3=tr,4=ml,5=mm,6=mr,7=bl,8=bm,9=br */
+  .dot:nth-child(1) { grid-column:1; grid-row:1; }
+  .dot:nth-child(2) { grid-column:2; grid-row:1; }
+  .dot:nth-child(3) { grid-column:3; grid-row:1; }
+  .dot:nth-child(4) { grid-column:1; grid-row:2; }
+  .dot:nth-child(5) { grid-column:2; grid-row:2; }
+  .dot:nth-child(6) { grid-column:3; grid-row:2; }
+  .dot:nth-child(7) { grid-column:1; grid-row:3; }
+  .dot:nth-child(8) { grid-column:2; grid-row:3; }
+  .dot:nth-child(9) { grid-column:3; grid-row:3; }
+
+  .dice-row { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1.2rem; }
+  .dice-count-btn {
+    font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em;
+    color: var(--muted); border: 1px solid var(--border); padding: 0.3rem 0.7rem;
+    border-radius: 100px; background: transparent; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .dice-count-btn.active, .dice-count-btn:hover { color: var(--gold); border-color: var(--gold-line); }
+
+  .dice-history {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted);
+    min-height: 1.4rem; letter-spacing: 0.08em; text-align: center;
+    border-top: 1px solid var(--border); padding-top: 0.8rem; margin-top: 0.4rem;
+  }
+  .dice-history span { color: var(--gold); }
+
+  .dice-total {
+    font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300;
+    color: var(--gold); text-align: center; line-height: 1;
+    margin-bottom: 0.3rem; min-height: 3rem;
+    transition: all 0.2s;
+  }
+  .dice-total-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 1rem; }
+
+  /* ── SEQUENCE GEN ────── */
+  .seq-input-row {
+    display: flex; gap: 0.6rem; align-items: center; margin-bottom: 1rem;
+  }
+  .seq-input {
+    flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 0.55rem 0.8rem; color: var(--text); font-family: 'DM Mono', monospace;
+    font-size: 0.85rem; outline: none; transition: border-color 0.25s;
+    letter-spacing: 0.05em;
+  }
+  .seq-input:focus { border-color: var(--gold-line); }
+  .seq-input::placeholder { color: var(--muted); }
+
+  .tool-btn {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.55rem 1rem; cursor: pointer;
+    border-radius: var(--radius); transition: all 0.2s;
+    border: 1px solid var(--gold-line); color: var(--gold); background: transparent;
+    white-space: nowrap;
+  }
+  .tool-btn:hover { background: var(--gold); color: var(--bg); }
+  .tool-btn:active { transform: scale(0.97); }
+
+  .seq-output {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1rem; min-height: 80px;
+    font-family: 'DM Mono', monospace; font-size: 0.78rem;
+    color: var(--muted); line-height: 1.9; letter-spacing: 0.05em;
+    word-break: break-all;
+    transition: border-color 0.3s;
+    position: relative;
+  }
+  .seq-output.has-data { border-color: rgba(201,169,110,0.2); }
+  .seq-num {
+    display: inline-block;
+    color: var(--gold); margin-right: 6px;
+    animation: popIn 0.3s ease both;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .seq-meta {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em;
+    color: var(--muted); margin-top: 0.8rem; text-transform: uppercase;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .seq-copy-btn {
+    font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold); background: transparent;
+    border: 1px solid var(--gold-line); padding: 0.2rem 0.6rem;
+    border-radius: 100px; cursor: pointer; transition: background 0.2s, color 0.2s;
+  }
+  .seq-copy-btn:hover { background: var(--gold); color: var(--bg); }
+
+  .seq-options { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .seq-opt-btn {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em;
+    color: var(--muted); border: 1px solid var(--border); padding: 0.25rem 0.6rem;
+    border-radius: 100px; background: transparent; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .seq-opt-btn.active, .seq-opt-btn:hover { color: var(--gold); border-color: var(--gold-line); }
+
+  .seq-error {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    color: #ff5f56; margin-top: 0.4rem; min-height: 1rem;
+    letter-spacing: 0.05em;
+  }
+
   /* FOOTER */
   footer {
     padding: 2.5rem 4rem; border-top: 1px solid var(--border);
@@ -346,6 +512,7 @@
     .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
     .skills-grid { grid-template-columns: repeat(2, 1fr); }
     .projects-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {
     .skills-grid { grid-template-columns: 1fr; }
@@ -368,8 +535,9 @@
     <li><a href="#academics">Academics</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#tools" style="color:var(--gold);">Tools</a></li>
   </ul>
-  <a href="mailto:akshay.pramanik@nitk.edu.in" class="nav-cta">Hire Me</a>
+  <a href="mailto:akshay.252it001@nitk.edu.in" class="nav-cta">Hire Me</a>
   <div class="hamburger" id="hamburger">
     <span></span><span></span><span></span>
   </div>
@@ -381,6 +549,7 @@
   <a href="#academics" class="mobile-nav-link">Academics</a>
   <a href="#projects" class="mobile-nav-link">Projects</a>
   <a href="#contact" class="mobile-nav-link">Contact</a>
+  <a href="#tools" class="mobile-nav-link" style="color:var(--gold);">Tools</a>
 </div>
 
 <!-- HERO -->
@@ -565,8 +734,8 @@
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-meta">2019 – 2023</div>
-        <div class="timeline-title">B.Tech in Computer Science &amp; Engineering  <span class="cgpa-badge">CGPA: 8.97 / 10</span></div>
-        <div class="timeline-inst">RCC Institute of Information Technology ,Kolkata</div>
+        <div class="timeline-title">B.Tech in Computer Science &amp; Engineering <span class="cgpa-badge">CGPA: 8.97 / 10</span></div>
+        <div class="timeline-inst">RCC Institute of Information Technology, Kolkata</div>
         <div class="timeline-detail">
           Strong academic foundation with focus on core computer science subjects. Active member of coding clubs and technical committees. Participated in multiple hackathons and technical fests.
         </div>
@@ -666,7 +835,7 @@
             <span class="contact-link-icon">GitHub</span>
             <span class="contact-link-text">github.com/akshaypramanik</span>
           </a>
-          <a href="#" class="contact-link">
+          <a href="https://drive.google.com/file/d/1RMoMdTTJq4zBqWZK28cAl6WY4vW5I9Tn/view?usp=sharing" class="contact-link">
             <span class="contact-link-icon">Resume</span>
             <span class="contact-link-text">Download CV / Resume</span>
           </a>
@@ -696,6 +865,91 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- FUN TOOLS -->
+<section id="tools">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <div class="section-label"><span></span> Just for Fun</div>
+      <h2 class="section-title">Mini <em>Tools</em></h2>
+    </div>
+    <p style="color:var(--muted); font-size:0.92rem; margin-bottom:2.5rem; max-width:500px; line-height:1.8;">
+      A couple of tiny utilities I built into the page. Because why not — every good portfolio needs a little personality.
+    </p>
+
+    <div class="tools-grid">
+
+      <!-- ── DICE ROLLER ── -->
+      <div class="tool-card fade-up">
+        <div class="tool-topbar">
+          <div class="tool-dots">
+            <div class="tool-dot r"></div><div class="tool-dot y"></div><div class="tool-dot g"></div>
+          </div>
+          <div class="tool-filename">dice_roller.js</div>
+          <div style="width:60px"></div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-label">// How many dice?</div>
+          <div class="dice-row" id="diceCountRow">
+            <button class="dice-count-btn active" data-count="1" onclick="setDiceCount(1,this)">1d6</button>
+            <button class="dice-count-btn" data-count="2" onclick="setDiceCount(2,this)">2d6</button>
+            <button class="dice-count-btn" data-count="3" onclick="setDiceCount(3,this)">3d6</button>
+          </div>
+
+          <div class="dice-display" id="diceDisplay">
+            <!-- dice rendered by JS -->
+          </div>
+
+          <div class="dice-total" id="diceTotal">—</div>
+          <div class="dice-total-label">Total</div>
+
+          <button class="tool-btn" style="width:100%; margin-bottom:0.8rem;" onclick="rollDice()">
+            Roll the Dice
+          </button>
+
+          <div class="dice-history" id="diceHistory">No rolls yet</div>
+        </div>
+      </div>
+
+      <!-- ── SEQUENCE GENERATOR ── -->
+      <div class="tool-card fade-up">
+        <div class="tool-topbar">
+          <div class="tool-dots">
+            <div class="tool-dot r"></div><div class="tool-dot y"></div><div class="tool-dot g"></div>
+          </div>
+          <div class="tool-filename">seq_generator.js</div>
+          <div style="width:60px"></div>
+        </div>
+        <div class="tool-body">
+          <div class="tool-label">// Sequence options</div>
+          <div class="seq-options">
+            <button class="seq-opt-btn active" id="optShuffle" onclick="setSeqMode('shuffle',this)">Shuffle</button>
+            <button class="seq-opt-btn" id="optRandom" onclick="setSeqMode('random',this)">Random pick</button>
+            <button class="seq-opt-btn" id="optDesc" onclick="setSeqMode('desc',this)">Descending</button>
+          </div>
+
+          <div class="seq-input-row">
+            <input class="seq-input" id="seqCountInput" type="number" min="1" max="1000" placeholder="How many numbers? (e.g. 20)">
+            <button class="tool-btn" onclick="generateSeq()">Generate</button>
+          </div>
+          <div class="seq-error" id="seqError"></div>
+
+          <div class="seq-output" id="seqOutput">
+            <span style="color:var(--muted); font-size:0.72rem;">Enter a count above and hit Generate — numbers 0 to N will be sequenced here.</span>
+          </div>
+
+          <div class="seq-meta" id="seqMeta" style="display:none;">
+            <span id="seqMetaText"></span>
+            <button class="seq-copy-btn" onclick="copySeq()">Copy</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-name">Akshay Pramanik</div>
@@ -703,17 +957,20 @@
 </footer>
 
 <script>
+// ── CURSOR GLOW ────────────────────────────────
 const glow = document.getElementById('cursor-glow');
 document.addEventListener('mousemove', e => {
   glow.style.left = e.clientX + 'px';
-  glow.style.top = e.clientY + 'px';
+  glow.style.top  = e.clientY + 'px';
 });
 
+// ── NAV SCROLL ─────────────────────────────────
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 60);
 });
 
+// ── HAMBURGER ──────────────────────────────────
 const ham = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 ham.addEventListener('click', () => {
@@ -727,37 +984,204 @@ document.querySelectorAll('.mobile-nav-link').forEach(link => {
   });
 });
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
+// ── FADE-UP OBSERVER ───────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting)
       setTimeout(() => entry.target.classList.add('visible'), entry.target.dataset.delay || 0);
-    }
   });
 }, { threshold: 0.1 });
-
 document.querySelectorAll('.fade-up, .timeline-item').forEach((el, i) => {
   el.dataset.delay = (i % 4) * 100;
   observer.observe(el);
 });
 
-const statsObserver = new IntersectionObserver((entries) => {
+// ── STAT BARS ──────────────────────────────────
+const statsObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.stat-fill').forEach(fill => {
-        fill.style.width = fill.dataset.width + '%';
-      });
-    }
+    if (entry.isIntersecting)
+      entry.target.querySelectorAll('.stat-fill').forEach(f => { f.style.width = f.dataset.width + '%'; });
   });
 }, { threshold: 0.3 });
-const statsContainer = document.getElementById('statsContainer');
-if (statsContainer) statsObserver.observe(statsContainer);
+const sc = document.getElementById('statsContainer');
+if (sc) statsObserver.observe(sc);
 
+// ── CONTACT FORM ───────────────────────────────
 function handleSubmit(e) {
   e.preventDefault();
   document.getElementById('form-msg').style.display = 'block';
   e.target.reset();
   setTimeout(() => { document.getElementById('form-msg').style.display = 'none'; }, 4000);
 }
+
+// ══════════════════════════════════════════════
+// ── DICE ROLLER ────────────────────────────────
+// ══════════════════════════════════════════════
+// Dot positions (9-cell grid indices) for faces 1-6
+// Positions: [tl,tm,tr,ml,mm,mr,bl,bm,br] = [0..8]
+const FACE_DOTS = {
+  1: [4],
+  2: [0, 8],
+  3: [0, 4, 8],
+  4: [0, 2, 6, 8],
+  5: [0, 2, 4, 6, 8],
+  6: [0, 2, 3, 5, 6, 8]
+};
+
+let diceCount = 1;
+let rollHistory = [];
+
+function setDiceCount(n, btn) {
+  diceCount = n;
+  document.querySelectorAll('.dice-count-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDice(Array(n).fill(null));
+  document.getElementById('diceTotal').textContent = '—';
+}
+
+function renderDice(values) {
+  const container = document.getElementById('diceDisplay');
+  container.innerHTML = '';
+  container.style.gap = diceCount > 1 ? '1rem' : '0';
+  values.forEach(val => {
+    const die = document.createElement('div');
+    die.className = 'die';
+    for (let i = 0; i < 9; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (val !== null && FACE_DOTS[val].includes(i) ? ' show' : '');
+      die.appendChild(dot);
+    }
+    container.appendChild(die);
+  });
+}
+
+function rollDice() {
+  const values = Array.from({length: diceCount}, () => Math.floor(Math.random() * 6) + 1);
+  const total = values.reduce((a, b) => a + b, 0);
+
+  // Animate
+  document.querySelectorAll('.die').forEach(d => {
+    d.classList.remove('rolling');
+    void d.offsetWidth;
+    d.classList.add('rolling');
+  });
+
+  // Quick flicker then show result
+  let ticks = 0;
+  const interval = setInterval(() => {
+    const fake = Array.from({length: diceCount}, () => Math.floor(Math.random() * 6) + 1);
+    renderDice(fake);
+    ticks++;
+    if (ticks >= 8) {
+      clearInterval(interval);
+      renderDice(values);
+      document.getElementById('diceTotal').textContent = total;
+    }
+  }, 55);
+
+  // History
+  rollHistory.unshift(total);
+  if (rollHistory.length > 6) rollHistory.pop();
+  const histEl = document.getElementById('diceHistory');
+  histEl.innerHTML = 'Last rolls: ' + rollHistory.map((v, i) =>
+    i === 0 ? '<span>' + v + '</span>' : v
+  ).join(' · ');
+}
+
+// Init dice display
+renderDice([null]);
+
+// ══════════════════════════════════════════════
+// ── SEQUENCE GENERATOR ─────────────────────────
+// ══════════════════════════════════════════════
+let seqMode = 'shuffle';
+let lastSeq = [];
+
+function setSeqMode(mode, btn) {
+  seqMode = mode;
+  document.querySelectorAll('.seq-opt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function generateSeq() {
+  const input = document.getElementById('seqCountInput');
+  const errEl = document.getElementById('seqError');
+  const n = parseInt(input.value);
+
+  errEl.textContent = '';
+  if (!input.value || isNaN(n) || n < 1) {
+    errEl.textContent = '! Please enter a valid number (min 1).';
+    return;
+  }
+  if (n > 1000) {
+    errEl.textContent = '! Max is 1000 to keep things snappy.';
+    return;
+  }
+
+  // Build array 0..n
+  let arr = Array.from({length: n}, (_, i) => i + 1);
+
+  if (seqMode === 'shuffle') {
+    // Fisher-Yates shuffle
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  } else if (seqMode === 'random') {
+    // Pick n random values from 0..n (with replacement)
+    arr = Array.from({length: n}, () => Math.floor(Math.random() * (n + 1)));
+  } else if (seqMode === 'desc') {
+    arr.reverse();
+  }
+
+  lastSeq = arr;
+
+  // Render with staggered pop-in animation (cap display at 200 for perf)
+  const display = arr.length > 200 ? arr.slice(0, 200) : arr;
+  const outputEl = document.getElementById('seqOutput');
+  outputEl.className = 'seq-output has-data';
+  outputEl.innerHTML = '';
+
+  display.forEach((num, i) => {
+    const span = document.createElement('span');
+    span.className = 'seq-num';
+    span.textContent = num;
+    span.style.animationDelay = Math.min(i * 18, 800) + 'ms';
+    outputEl.appendChild(span);
+  });
+
+  if (arr.length > 200) {
+    const more = document.createElement('span');
+    more.style.color = 'var(--muted)';
+    more.style.fontSize = '0.68rem';
+    more.style.display = 'block';
+    more.style.marginTop = '0.5rem';
+    more.textContent = '... and ' + (arr.length - 200) + ' more (copy to get full list)';
+    outputEl.appendChild(more);
+  }
+
+  const metaEl = document.getElementById('seqMeta');
+  const metaTxt = document.getElementById('seqMetaText');
+  const modeLabel = seqMode === 'shuffle' ? 'shuffled' : seqMode === 'random' ? 'random picks' : 'descending';
+  metaTxt.textContent = arr.length + ' numbers · 0 to ' + n + ' · ' + modeLabel;
+  metaEl.style.display = 'flex';
+}
+
+function copySeq() {
+  if (!lastSeq.length) return;
+  const text = lastSeq.join(', ');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.seq-copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = orig; }, 1800);
+  });
+}
+
+// Enter key support for seq input
+document.getElementById('seqCountInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') generateSeq();
+});
 </script>
 </body>
 </html>
